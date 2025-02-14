@@ -58,9 +58,9 @@ class Message_manager:
                 read.append(message.get_message())
         return read
 
-message_manager = Message_manager()
-message_manager.add_message("ilia", "mmd", "hi")
-message_manager.save_messages()
-message_manager.load_messages()
-print("First check: ", message_manager.check_messages("mmd"))
-print("Second check: ", message_manager.check_messages("mmd"))
+#message_manager = Message_manager()
+#message_manager.add_message("ilia", "mmd", "hi")
+#message_manager.save_messages()
+#message_manager.load_messages()
+#print("First check: ", message_manager.check_messages("mmd"))
+#print("Second check: ", message_manager.check_messages("mmd"))
