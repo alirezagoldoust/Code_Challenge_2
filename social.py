@@ -60,5 +60,7 @@ class Message_manager:
 
 message_manager = Message_manager()
 message_manager.add_message("ilia", "mmd", "hi")
-print(message_manager.check_messages("mmd"))
-print(message_manager.check_messages("mmd"))
+message_manager.save_messages()
+message_manager.load_messages()
+print("First check: ", message_manager.check_messages("mmd"))
+print("Second check: ", message_manager.check_messages("mmd"))
