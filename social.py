@@ -17,6 +17,11 @@ class Connection_Manager:
     def add_connection(self, follower, followed):
         self.__list_connection.append(Connection(follower, followed))
 
-    def check_follower(self, follower, followed):
-        for user in self.__list_connection:
-            
+    def check_follower(self, follower):
+        [connection.get_followed() for connection in self.__list_connection if connection.get_follower() == follower]
+        
+    def check_followed(self, followed):
+        [connection.get_follower() for connection in self.__list_connection if connection.get_followed() == followed]
+        
+    def mutual_connection(self, follower_list, followed_list):
+        [mutual for mutual in  if follower_list[mutual] == followed_list[mutual]]
