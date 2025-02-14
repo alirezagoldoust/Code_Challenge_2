@@ -1,5 +1,6 @@
 import json
-
+from connect import Message_manager , Message
+from social import Connection_Manager
 class User:
     def __init__(self, username: str, password: str):
         self.__username = username
@@ -51,6 +52,9 @@ class Account_manger:
 class Menu_list :
     def __init__(self):
         self.account_manager = Account_manger()
+        self.message_manager = Message_manager()
+        self.connection_manager = Connection_Manager()
+
         self.__active_user =  None
     
     def menu(self):
@@ -68,18 +72,38 @@ class Menu_list :
             print("2.followers list")
             print("3.following list")
             print("4.messeage")
+            print("5.my messages")
             choice = int(input())
             if choice == 1:
                 followed_username = input("who you want to follow? ")
+                self.connection_manager.add_connection(self.__active_user.get_username(), followed_username)
+
+
                 
             if choice == 2 :
-                self.signup()
+                follower = self.connection_manager.check_follower(self.__active_user.get_username())
+                for i, user in enumerate(follower):
+                    print(f"{i}. {user}")
 
             if choice == 3:
+                follwing = self.connection_manager.check_followed(self.__active_user.get_username())
+                for i, user in enumerate(follwing):
+                    print(f"{i}. {user}")
 
-            if choice == 4:   
-             
+            if choice == 4:  
+                follwing = self.connection_manager.get_mutual_connection(self.__active_user.get_username())
+                for i, user in enumerate(follwing):
+                    print(f"{i}. {user}")
+                username_message = input("who you want to send the message? ") 
+                mess = input("write your message")
+                self.message_manager.add_message(self.__active_user.get_username(), username_message, mess)
 
+            if choice == 5 :
+
+                list_messages = self.message_manager.check_messages(self.__active_user.get_username())
+                for mess in list_messages :
+                    mess: Message
+                    print(f"{mess.get_sender()}->{mess.get_message()}")
             
 
     def login(self):
@@ -89,3 +113,5 @@ class Menu_list :
         self.__active_user = self.account_manager.login(username, password)
         if not self.__active_user:
             print("wrong username")
+
+
