@@ -31,14 +31,15 @@ class Account_manger:
     def add_user(self, username:str, password:str):
         new_user = User(username= username, password=password)
         self.__user_list.append(new_user)
+        return new_user
     
     def signup(self, username, password):
-        for user in self.__user_list:
-            if user.get_username() == username:
-                return False
-            else:
-                self.add_user(username, password)
-                return True
+        # for user in self.__user_list:
+        #     if user.get_username() == username:
+        #         return False
+        #     else:
+        new_user = self.add_user(username, password)
+        return new_user
             
     def login(self, username, password):
         for user in self.__user_list:
@@ -64,9 +65,17 @@ class Menu_list :
             print("what is your choice? ")
             choice = int(input())
             if choice == 1:
-                self.login()
+                user_name = input("what is your username? ")
+                pass_word = input("what is your password? ")
+                user = self.account_manager.login(user_name, pass_word)
+                if user != None:
+                    self.__active_user = user
             if choice == 2 :
-                self.signup()
+                user_name = input("what is your username? ")
+                pass_word = input("what is your password? ")
+                user = self.account_manager.signup(user_name, pass_word)
+                if user != None:
+                    self.__active_user = user
         if self.__active_user != None:
             print("1.follow")
             print("2.followers list")
@@ -77,8 +86,6 @@ class Menu_list :
             if choice == 1:
                 followed_username = input("who you want to follow? ")
                 self.connection_manager.add_connection(self.__active_user.get_username(), followed_username)
-
-
                 
             if choice == 2 :
                 follower = self.connection_manager.check_follower(self.__active_user.get_username())
@@ -99,7 +106,6 @@ class Menu_list :
                 self.message_manager.add_message(self.__active_user.get_username(), username_message, mess)
 
             if choice == 5 :
-
                 list_messages = self.message_manager.check_messages(self.__active_user.get_username())
                 for mess in list_messages :
                     mess: Message
@@ -109,7 +115,6 @@ class Menu_list :
     def login(self):
         username = input()
         password = input()
-
         self.__active_user = self.account_manager.login(username, password)
         if not self.__active_user:
             print("wrong username")
